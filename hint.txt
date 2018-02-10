@@ -2,3 +2,6 @@ Following link can be useful to logout and redirect to specific url
 --
 http://www.google.com/accounts/logout?continue=https://appengine.google.com/_ah/logout/?continue=http://www.eryushion.com
 =====================================
+Google SignIn Link with CodeIgniter
+--
+https://www.codexworld.com/login-with-google-account-in-codeigniter/
