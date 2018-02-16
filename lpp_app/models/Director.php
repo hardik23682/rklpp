@@ -6,7 +6,7 @@ class Director extends CI_Model{
     function getTermRows($id = ""){
         if(!empty($id)){
             $query = $this->db->get_where('term_details', array('id' => $id,'status'=>1));
-            return $query->row_array();
+            return $query->result_array();
         }else{
             
          $query = $this->db->get_where('term_details', array('status'=>1));
@@ -41,7 +41,7 @@ class Director extends CI_Model{
      * Delete term
      */
     public function deleteTerm($id){
-        $delete = $this->db->delete('terms',array('id'=>$id));
+        $delete = $this->db->delete('term_details',array('id'=>$id));
         return $delete?true:false;
     }
     /*
@@ -50,7 +50,7 @@ class Director extends CI_Model{
 	public function getTemplateRows($id = ""){
         if(!empty($id)){
             $query = $this->db->get_where('template_details', array('temp_id' => $id));
-            return $query->row_array();
+            return $query->result_array();
         }else{
             $query = $this->db->get('template_details');
             return $query->result_array();
@@ -66,6 +66,25 @@ class Director extends CI_Model{
         }else{
             return false;
         }
+    }
+	/*
+     * Update template
+     */
+    public function updateTemplate($data, $id) {
+        if(!empty($data) && !empty($id)){
+            $update = $this->db->update('template_details', $data, array('id'=>$id));
+            return $update?true:false;
+        }else{
+            return false;
+        }
+    }
+    
+    /*
+     * Delete template
+     */
+    public function deleteTemplate($id){
+        $delete = $this->db->delete('template_details',array('temp_id'=>$id));
+        return $delete?true:false;
     }
      /*
     * GetHoliday

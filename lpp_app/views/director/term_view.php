@@ -6,6 +6,7 @@
                 <div class="card-title">Term </div>
                 <div class="card-block">
                     <form method="post" action="" class="form-inline" id="termForm">
+						<input type="hidden" name="termID" id="termID"/>
                         <div class="form-group" class="col-xs-4">
                             <label for="school">School</label>
                             <!-- <input type="text" class="form-control" name="school" placeholder="Enter School" value=""> -->
@@ -27,7 +28,7 @@
                             <?php //echo form_error('end_dt','<p class="help-block text-danger">','</p>'); ?>
                         </div>
                          
-                        <input type="button" name="termSubmit" class="btn btn-primary" id='termSubmit' value="Submit"/>
+                        <input type="button" name="termSubmit" class="btn btn-primary" id='termSubmit' value="Add"/>
                     </form>
                 </div>
             </div>

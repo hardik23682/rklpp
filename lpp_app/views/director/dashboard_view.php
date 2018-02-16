@@ -5,7 +5,7 @@
 
 	<div class="row">
 		<div class="col-md-4 mt-sm-3 col-sm-12">
-			<a href="dashboard/term" style="text-decoration: none;color: black">
+			<a href="term" style="text-decoration: none;color: black">
 				<div class="card">
 					<div class="card-block p-5 text-center">
 						<span class="flaticon flaticon-avatar big"></span>
@@ -15,7 +15,7 @@
 			</a>
 		</div>
 		<div class="col-md-4 mt-sm-3 col-sm-12">
-			<a href="dashboard/holiday" style="text-decoration: none;color: black">
+			<a href="holiday" style="text-decoration: none;color: black">
 				<div class="card pt-3 pb-3">
 					<div class="card-block p-5 text-center">
 						<span class="flaticon flaticon-notebook big dashboard-planbook"></span>
@@ -25,7 +25,7 @@
 			</a>
 		</div>
 		<div class="col-md-4 mt-sm-3 col-sm-12">
-			<a href="dashboard/template" style="text-decoration: none;color: black">
+			<a href="template" style="text-decoration: none;color: black">
 				<div class="card">
 					<div class="card-block p-5 text-center">
 						<span class="flaticon flaticon-avatar big"></span>

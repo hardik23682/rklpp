@@ -6,13 +6,17 @@
 $(document).ready(function(){
 	loadTermData();
     function loadTermData(){
+		
 		alert("loadData form");
 		$.ajax(
 		{
 			url : "../dashboard/viewTerm",
 			type: "POST",
 			success:function(data)
-			{	data = $.parseJSON(data);
+			{	
+				alert(data);
+				data = $.parseJSON(data);
+				alert(data);
 				var html = "";
 				for (var i = 0; i < data.length; i++) {
 					html= html+"<tr><td>"+data[i].id+"</td><td>"+data[i].school+"</td><td>"+data[i].start_dt+"</td><td>"+data[i].end_dt+"</td><td><button class='btnTermEdit' id= "+data[i].id+"> Edit</button></td><td><button class='btnTermDelete' id= "+data[i].id+"><i class='fa fa-trash'> Delete</i></button></td></tr>";
@@ -22,8 +26,9 @@ $(document).ready(function(){
 		});
 	}
     $("#termSubmit").click(function(e)
-		{ var btnValue = $("#termSubmit").val;
-			if(btnValue=='Add'){
+		{ var btnValue = $("#termSubmit").val();
+			alert(btnValue);
+			if(btnValue==='Add'){
 			var MyForm = $("#termForm").serialize();
 			//alert("from termSubmit "+MyForm);
 			console.log(MyForm);
@@ -36,13 +41,13 @@ $(document).ready(function(){
 				{
 					alert(maindta);
 					loadTermData();
-					$(':input','#termForm')
+					 $(':input','#termForm')
 					.not(':button, :submit, :reset, :hidden')
 					.val('')
 					.removeAttr('checked')
-					.removeAttr('selected');
+					.removeAttr('selected'); 
 				}
-			});}else{
+			});}else if(btnValue==='Update'){
 				var MyForm = $("#termForm").serialize();
 			//alert("from termSubmit "+MyForm);
 			console.log(MyForm);
@@ -60,6 +65,8 @@ $(document).ready(function(){
 					.val('')
 					.removeAttr('checked')
 					.removeAttr('selected');
+					$('#termSubmit').val('Add');
+					$('#school').prop('selectedIndex', 0);
 				}
 			});
 			}
@@ -68,37 +75,46 @@ $(document).ready(function(){
 			
 		});
 		$(document).on('click',".btnTermEdit",function(){
-			var id = $this.attr('id');
+			var id = this.id;
+			alert(this.id);
 			$.ajax(
 				{
-					data:"id"=id
-					type: "POST",
-					url : "../dashboard/editTerm,
+					
+					type: "GET",
+					url : "../dashboard/editTerm/"+id,
 					success:function(data)
-					{	data = $.parseJSON(data);
+					{	alert(data);
+						data = $.parseJSON(data);
+						alert('data length : '+data.length);
 						var html = "";
 						for (var i = 0; i < data.length; i++) {
-							$('termID').value(data[i].id);
-							$('school').value(data[i].school);
-							$('start_dt').value(data[i].start_dt);
-							$('end_dt').value(data[i].end_dt);
+							alert(data[i].id);
+							$('#termID').val(data[i].id);
+							$('#school').val(data[i].school);
+							$('#start_dt').val(data[i].start_dt);
+							$('#end_dt').val(data[i].end_dt);
+							$("#termSubmit").val('Update');
 						}
-						$("#templateDetails").html(html);
+						//$("#templateDetails").html(html);
 					}	
 				});
-			alert('btnEditTerm clicked'+$this.attr('id'));
+			//alert('btnEditTerm clicked'+$this.attr('id'));
 		});
 		$(document).on('click',".btnTermDelete",function(){
 			alert("Do you want to delete this term");
 		//	alert('btnDeleteTerm clicked'+ $this.attr('id'));
-		var id = $this.attr('id');
+		var id = this.id;
+		alert(id);
 			$.ajax(
 				{
-					data:"id"=id
+					data:{"id":id},
 					type: "POST",
-					url : "../dashboard/deleteTerm,
+					url : "../dashboard/deleteTerm",
 					success:function(data)
-					{	alert(data);
+					{	
+						alert(data);
+						loadTermData();
+					
 					}	
 				});
 		});
@@ -113,15 +129,18 @@ $(document).ready(function(){
 			{	data = $.parseJSON(data);
 				var html = "";
 				for (var i = 0; i < data.length; i++) {
-					html= html+"<tr><td>"+data[i].template_name+"</td><td>"+data[i].school+"</td><td><button class='btnEdit' id= "+data[i].temp_id+"> Edit</button></td><td><button class='btnDelete' id= "+data[i].temp_id+"><i class='fa fa-trash'> Delete</i></button></td></tr>";
+					html= html+"<tr><td><a  href='tempTranscation/"+data[i].temp_id+"'>"+data[i].template_name+"</a></td><td>"+data[i].school+"</td><td><button class='btnTempEdit' id= "+data[i].temp_id+"> Edit</button></td><td><button class='btnTempDelete' id= "+data[i].temp_id+"><i class='fa fa-trash'> Delete</i></button></td></tr>";
 				}
 				$("#templateDetails").html(html);
 			}	
 		});
 	}
 	$("#templateSubmit").click(function(e){
+			var btnValue = $("#templateSubmit").val();
+			alert(btnValue);
 			
 			var MyForm = $("#templateForm").serialize();
+   			if(btnValue==='Add'){
 			alert("from termSubmit "+MyForm);
 			console.log(MyForm);
 			$.ajax(
@@ -140,8 +159,70 @@ $(document).ready(function(){
 					.removeAttr('selected');
 				}
 			});
+			}else{
+				$.ajax(
+			{
+				url : "../dashboard/updateTemplate",
+				type: "POST",
+				data : MyForm,
+				success:function(maindta)
+				{
+					alert(maindta);
+					loadTemplateData();
+					$(':input','#templateForm')
+					.not(':button, :submit, :reset, :hidden')
+					.val('')
+					.removeAttr('checked')
+					.removeAttr('selected');
+					$('#templateSubmit').val('Add');
+				}
+			});
+			}
 			e.preventDefault(); //STOP default action
 			
 	});
+	$(document).on('click',".btnTempEdit",function(){
+			var id = this.id;
+			alert(this.id);
+			$.ajax(
+				{
+					
+					type: "GET",
+					url : "../dashboard/editTemplate/"+id,
+					success:function(data)
+					{	alert(data);
+						data = $.parseJSON(data);
+						alert('data length : '+data.length);
+						var html = "";
+						for (var i = 0; i < data.length; i++) {
+							alert(data[i].id);
+							$('#tempID').val(data[i].id);
+							$('#school').val(data[i].school);
+							$('#tempName').val(data[i].template_name);
+							$("#templateSubmit").val('Update');
+						}
+						//$("#templateDetails").html(html);
+					}	
+				});
+			//alert('btnEditTerm clicked'+$this.attr('id'));
+		});
+		$(document).on('click',".btnTempDelete",function(){
+			alert("Do you want to delete this template");
+		//	alert('btnDeleteTerm clicked'+ $this.attr('id'));
+		var id = this.id;
+		alert(id);
+			$.ajax(
+				{
+					data:{"id":id},
+					type: "POST",
+					url : "../dashboard/deleteTemplate",
+					success:function(data)
+					{	
+						alert(data);
+						loadTemplateData();
+					
+					}	
+				});
+		});
 });
 </script>

@@ -6,6 +6,7 @@
                 <div class="panel-heading">Template</div>
                 <div class="panel-body">
                     <form class="form-inline"  name="templateForm" id="templateForm" method="POST"> 
+						<input type="hidden" name="tempID" id="tempID"/>
                         <div class="form-group" class="col-xs-5">
                             <label for="tempName">Template Name:</label>
                             <input type="text" class="form-control" id="tempName" placeholder="Enter Name" name="tempName">
